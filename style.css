@@ -5,18 +5,22 @@
   padding: 0;
 }
 
-/* NASA brand colors (NASA Web Design System) */
+/* NASA brand colors — from the official NASA Web Design System palette
+   (nasa.github.io/nasawds-site/components/colors) */
 :root {
-  --nasa-blue: #0b3d91;
-  --nasa-red: #fc3d21;
-  --nasa-black: #0b0b0b;
+  --nasa-blue: #0b3d91;      /* $color-primary-darker */
+  --nasa-red: #dd361c;       /* $color-secondary */
+  --nasa-black: #212121;     /* $color-base */
   --nasa-white: #ffffff;
-  --nasa-gray: #f1f1f1;
+  --nasa-gray: #f1f1f1;      /* $color-gray-lightest */
 }
+
+/* NASAWDS recommends Helvetica for headings/logos and Source Sans Pro for body text */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap');
 
 /* Base page styles */
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
   background-color: var(--nasa-gray);
   padding: 20px;
   color: var(--nasa-black);
@@ -40,10 +44,10 @@ body {
 }
 
 h1 {
-  font-family: Verdana, sans-serif;
-  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
   color: var(--nasa-blue);
-  letter-spacing: 0.5px;
+  letter-spacing: -0.02em;
 }
 
 /* Logo */
@@ -204,6 +208,8 @@ button:hover {
 }
 
 .gallery-item h3 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
   margin-top: 10px;
   padding: 5px 5px 0;
   font-size: 16px;
@@ -296,7 +302,8 @@ button:hover {
 
 #modalTitle {
   color: var(--nasa-blue);
-  font-family: Verdana, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
   margin-bottom: 5px;
 }
 
