@@ -19,8 +19,19 @@ const modalExplanation = document.getElementById('modalExplanation');
 setupDateInputs(startInput, endInput);
 
 // TODO: Replace DEMO_KEY with your own key from https://api.nasa.gov for higher rate limits
-const NASA_API_KEY = 'BLXRYYzzINLRJ71rCRDGpj0pSP6axKGgiXgYOLhN';
+
 const APOD_URL = 'https://api.nasa.gov/planetary/apod';
+
+const url = `${APOD_URL}?api_key=${NASA_API_KEY}`;
+
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 
 // LevelUp: Random "Did You Know?" space facts
 const spaceFacts = [
