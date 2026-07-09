@@ -93,13 +93,29 @@ button:hover {
   background-color: #d5301a;
 }
 
+/* Date field + label grouping */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.field-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--nasa-blue);
+}
+
 /* Stack horizontally on wider screens */
 @media (min-width: 600px) {
   .filters {
     flex-direction: row;
+    align-items: flex-end;
     padding: 0;
   }
 
+  .field-group,
   input[type="date"],
   button {
     width: auto;
@@ -207,7 +223,7 @@ button:hover {
   transform: scale(1.08);
 }
 
-.gallery-item h3 {
+.gallery-item h2 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
   margin-top: 10px;

@@ -19,7 +19,6 @@ const modalExplanation = document.getElementById('modalExplanation');
 setupDateInputs(startInput, endInput);
 
 // TODO: Replace DEMO_KEY with your own key from https://api.nasa.gov for higher rate limits
-
 const APOD_URL = 'https://api.nasa.gov/planetary/apod';
 
 const url = `${APOD_URL}?api_key=${NASA_API_KEY}`;
@@ -74,7 +73,7 @@ function createGalleryItem(entry) {
       <div class="media-wrap">
         <img src="${entry.url}" alt="${entry.title}" />
       </div>
-      <h3>${entry.title}</h3>
+      <h2>${entry.title}</h2>
       <p>${entry.date}</p>
     `;
   } else if (entry.media_type === 'video') {
@@ -83,14 +82,14 @@ function createGalleryItem(entry) {
       <div class="video-thumb">
         🎬 This is a video.<br />Click to watch on YouTube.
       </div>
-      <h3>${entry.title}</h3>
+      <h2>${entry.title}</h2>
       <p>${entry.date}</p>
     `;
   } else {
     // Fallback for any unexpected media type
     item.innerHTML = `
       <div class="video-thumb">Unsupported media type</div>
-      <h3>${entry.title}</h3>
+      <h2>${entry.title}</h2>
       <p>${entry.date}</p>
     `;
   }
