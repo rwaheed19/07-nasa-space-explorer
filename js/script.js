@@ -19,6 +19,7 @@ const modalExplanation = document.getElementById('modalExplanation');
 setupDateInputs(startInput, endInput);
 
 // TODO: Replace DEMO_KEY with your own key from https://api.nasa.gov for higher rate limits
+// TODO: Replace DEMO_KEY with your own key from https://api.nasa.gov for higher rate limits
 const APOD_URL = 'https://api.nasa.gov/planetary/apod';
 
 const url = `${APOD_URL}?api_key=${NASA_API_KEY}`;
@@ -117,6 +118,34 @@ function renderGallery(entries) {
   });
 }
 
+// Convert any common YouTube URL shape into an embeddable /embed/ URL.
+// Returns null if the URL isn't a recognizable YouTube link (e.g. Vimeo, direct .mp4, etc).
+function getYouTubeEmbedUrl(rawUrl) {
+  try {
+    const u = new URL(rawUrl);
+
+    // Already in embeddable form, e.g. youtube.com/embed/VIDEO_ID
+    if (u.hostname.includes('youtube.com') && u.pathname.startsWith('/embed/')) {
+      return rawUrl;
+    }
+
+    // Standard watch link, e.g. youtube.com/watch?v=VIDEO_ID
+    if (u.hostname.includes('youtube.com') && u.searchParams.get('v')) {
+      return `https://www.youtube.com/embed/${u.searchParams.get('v')}`;
+    }
+
+    // Short link, e.g. youtu.be/VIDEO_ID
+    if (u.hostname.includes('youtu.be')) {
+      const videoId = u.pathname.replace('/', '');
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    return null;
+  } catch (error) {
+    return null;
+  }
+}
+
 // Open the modal with full details for a gallery entry
 function openModal(entry) {
   modalTitle.textContent = entry.title;
@@ -126,8 +155,31 @@ function openModal(entry) {
   if (entry.media_type === 'image') {
     modalMedia.innerHTML = `<img src="${entry.hdurl || entry.url}" alt="${entry.title}" />`;
   } else if (entry.media_type === 'video') {
-    // Embed YouTube videos directly when possible
-    modalMedia.innerHTML = `<iframe src="${entry.url}" title="${entry.title}" allowfullscreen></iframe>`;
+    const embedUrl = getYouTubeEmbedUrl(entry.url);
+
+    if (embedUrl) {
+      // Embed the video, but always include a direct link as a safety net
+      // in case the host blocks embedding for this particular video.
+      modalMedia.innerHTML = `
+        <iframe
+          src="${embedUrl}"
+          title="${entry.title}"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+        <p class="video-fallback-link">
+          <a href="${entry.url}" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>
+        </p>
+      `;
+    } else {
+      // Not a recognizable/embeddable video link — link out instead of showing a broken frame
+      modalMedia.innerHTML = `
+        <div class="video-fallback">
+          <p>🎬 This video can't be embedded here.</p>
+          <a href="${entry.url}" target="_blank" rel="noopener noreferrer" class="video-link-btn">Watch the video ↗</a>
+        </div>
+      `;
+    }
   } else {
     modalMedia.innerHTML = '';
   }
@@ -139,6 +191,7 @@ function closeModal() {
   modal.classList.add('hidden');
   modalMedia.innerHTML = ''; // stop any playing video
 }
+
 
 modalClose.addEventListener('click', closeModal);
 modal.addEventListener('click', (event) => {

@@ -316,6 +316,40 @@ button:hover {
   border-radius: 6px;
 }
 
+.video-fallback-link {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.video-fallback-link a {
+  color: var(--nasa-blue);
+  font-weight: 600;
+}
+
+.video-fallback {
+  background-color: var(--nasa-black);
+  color: var(--nasa-white);
+  border-radius: 6px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.video-link-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 20px;
+  background-color: var(--nasa-red);
+  color: var(--nasa-white);
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.video-link-btn:hover {
+  background-color: #b8290f;
+}
+
 #modalTitle {
   color: var(--nasa-blue);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
